@@ -66,44 +66,12 @@ impl Game {
     }
 
     fn update_snake(&mut self, dir: Option<Direction>) {
-	self.snake.move_forward(dir);
-        self.check_eating();
-	let collision: bool = self.check_snake_border_collision();
-	if collision == true {
-	    self.game_over = true
-	}
-    }
-
-    fn check_snake_border_collision(&self) -> bool {
-	let (x, y) = self.snake.head_position();
-	let dir = self.snake.head_direction();
-
-	match dir {
-	    Direction::Up => {
-		if y == 0 {
-		    return true
-		}
-		return false
-	    },
-	    Direction::Right => {
-		if x == self.width - 1 {
-		    return true
-		}
-		return false
-	    },
-	    Direction::Down => {
-		if y == self.height - 1 {
-		    return true
-		}
-		return false
-	    },
-	    Direction::Left => {
-		if x == 0 {
-		    return true
-		}
-		return false
-	    }
-	}
+        if self.check_is_snake_alive(dir) {
+            self.snake.move_forward(dir);
+            self.check_eating();
+        } else {
+            self.game_over = true;
+        }
     }
 
     fn check_eating(&mut self) {
@@ -112,6 +80,14 @@ impl Game {
             self.food_exist = false;
             self.snake.restore_last_removed();
         }
+    }
+
+    fn check_is_snake_alive(&self, dir: Option<Direction>) -> bool {
+        let (next_x, next_y): (i32, i32) = self.snake.next_head_position(dir);
+        if self.snake.is_overlap_except_tail(next_x, next_y) {
+            return false;
+        }
+        next_x > 0 && next_y > 0 && next_x < self.width - 1 && next_y < self.height -1
     }
 
     fn add_food(&mut self) {
