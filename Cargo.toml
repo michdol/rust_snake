@@ -1,0 +1,9 @@
+[package]
+name = "piston_test"
+version = "0.1.0"
+authors = ["kater"]
+edition = "2018"
+
+[dependencies]
+piston_window = "0.81.0"
+rand = "0.6"
