@@ -31,6 +31,14 @@ impl Game {
 	}
     }
 
+    pub fn reset(&mut self) {
+        self.food_exist = true;
+        self.game_over = false;
+        self.food_x = 5;
+        self.food_y = 3;
+        self.snake.reset();
+    }
+
     pub fn draw(&self, con: &Context, g: &mut G2d) {
 	self.snake.draw(con, g);
         

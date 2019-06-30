@@ -137,4 +137,16 @@ impl Snake {
         let blk = self.last_removed_block.clone().unwrap();
         self.body.push_back(blk);
     }
+
+    pub fn reset(&mut self) {
+        while self.body.len() > 3 {
+            self.body.pop_back();
+        }
+        let mut c = 1;
+        for block in &mut self.body {
+            block.x = 5 - c;
+            block.y = 2;
+            c += 1;
+        }
+    }
 }

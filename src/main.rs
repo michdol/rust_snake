@@ -23,7 +23,7 @@ fn main() {
     let mut game = Game::new(20, 20);
     while let Some(event) = window.next() {
         if game.game_over == true {
-	    break
+	    game.reset();
 	}
 	
 	if let Some(Button::Keyboard(key)) = event.press_args() {
